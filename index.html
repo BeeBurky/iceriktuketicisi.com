@@ -1,101 +1,103 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>iceriktuketicisi.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Web Sayfası</title>
+    <style>
+        /* CSS - Tasarım Kısmı */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
 
-  <!-- Extended Description (Türkçe) -->
-  <meta name="description" content="Teknoloji, veri bilimi, hukuk ve mühendislik alanlarında analizler, içerikler ve güncel bilgiler sunan bir içerik sitesi: iceriktuketicisi.com">
+        header {
+            background: #2c3e50;
+            color: #ffffff;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin:0;
-      padding:0;
-      background:#f9f9f9;
-      color:#111;
-      line-height:1.6;
-    }
+        h1 { margin: 0; font-size: 2.5rem; }
+        p { font-size: 1.1rem; color: #666; }
 
-    a { color:#1a73e8; text-decoration:none; }
-    a:hover { text-decoration:underline; }
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+            cursor: pointer;
+            border: none;
+        }
 
-    h1,h2,h3 { margin:0; }
-    h1 { font-size:3em; text-align:center; margin-top:50px; }
-    h2 { font-size:1.5em; text-align:center; color:#555; margin-bottom:50px; }
+        .btn:hover {
+            background: #2980b9;
+        }
 
-    .container { max-width:900px; margin:0 auto; padding:20px; }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
 
-    section {
-      margin-bottom:60px; 
-      padding:20px; 
-      background:white; 
-      border-radius:12px; 
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
-    }
+        /* Küçük bir animasyon */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
 
-    section h3 { font-size:1.3em; margin-bottom:15px; color:#222; }
-
-    .content-items { display:flex; flex-direction:column; gap:20px; }
-    .item { padding:15px; border-left:4px solid #1a73e8; background:#f7f7f7; border-radius:6px; transition:0.3s; }
-    .item:hover { transform: translateY(-3px); box-shadow:0 4px 8px rgba(0,0,0,0.1); }
-
-    .contact { display:flex; flex-direction:column; gap:10px; }
-    .contact a { display:inline-flex; align-items:center; gap:8px; }
-
-    @media (max-width:600px){
-      h1 { font-size:2em; }
-      h2 { font-size:1.2em; }
-    }
-
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-
-    <!-- Header -->
     <header>
-      <h1>iceriktuketicisi.com</h1>
-      <h2>Teknoloji, Veri Bilimi, Hukuk ve Mühendislik İçerikleri</h2>
+        <div class="fade-in">
+            <h1>Hoş Geldiniz!</h1>
+            <p>Hayalindeki projeyi gerçeğe dönüştürmeye hazır mısın?</p>
+        </div>
     </header>
 
-    <!-- Hakkında -->
-    <section id="about">
-      <h3>Hakkında</h3>
-      <p>
-        Bu site, teknoloji, veri bilimi, hukuk ve mühendislik alanlarında analizler, içerikler ve güncel bilgiler sunmayı amaçlamaktadır.
-        Ziyaretçilere faydalı ve anlaşılır bilgi sunmayı hedefler.
-      </p>
-    </section>
+    <div class="container fade-in">
+        <h2>Harika İşler Başaralım</h2>
+        <p>Bu sayfa, HTML ve CSS'in gücüyle tek parça halinde oluşturuldu. Şık, modern ve hızlı!</p>
+        
+        <p>Aşağıdaki butona tıklayarak bir etkileşim başlatabilirsin:</p>
+        
+        <button class="btn" onclick="mesajVer()">Tıkla ve Selamla!</button>
+    </div>
 
-    <!-- İçerikler -->
-    <section id="content">
-      <h3>İçerikler</h3>
-      <div class="content-items">
-        <div class="item">
-          <p><strong>İçerik 1:</strong> Örnek içerik açıklaması veya link.</p>
-        </div>
-        <div class="item">
-          <p><strong>İçerik 2:</strong> Başka bir örnek içerik açıklaması.</p>
-        </div>
-      </div>
-    </section>
+    <footer>
+        &copy; 2026 Tüm Hakları Saklıdır | Gemini ile Hazırlandı
+    </footer>
 
-    <!-- İletişim -->
-    <section id="contact">
-      <h3>İletişim / Geri Bildirim</h3>
-      <div class="contact">
-        <p>Email: <em>Coming soon</em></p>
-        <p>GitHub: <a href="https://github.com/BeeBurky" target="_blank">GitHub</a></p>
-        <p>LinkedIn: <em>Coming soon</em></p>
-      </div>
-    </section>
-
-  </div>
+    <script>
+        // JavaScript - Etkileşim Kısmı
+        function mesajVer() {
+            alert("Harika! Sayfan çalışıyor. Şimdi bunu dilediğin gibi özelleştirebilirsin.");
+        }
+    </script>
 
 </body>
 </html>
