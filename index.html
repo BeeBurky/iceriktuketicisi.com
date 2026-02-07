@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neo-Synth: Geleceği Şekillendir</title>
+    <meta name="description" content="Neo-Synth ile geleceğin teknolojilerini keşfedin. Yapay zeka, nöral entegrasyon ve kuantum bilişimi deneyimleyin.">
+    <meta name="keywords" content="Neo-Synth, Yapay Zeka, Nöral Entegrasyon, Kuantum, Teknoloji, Gelecek">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0d0d1a;
             --card-bg: #1a1a2e;
-            --primary-color: #6a0dad; /* Mor */
-            --secondary-color: #00bcd4; /* Turkuaz */
+            --primary-color: #6a0dad;
+            --secondary-color: #00bcd4;
             --text-light: #e0e0f0;
             --text-dark: #b0b0d0;
             --border-color: rgba(106, 13, 173, 0.4);
@@ -19,16 +21,15 @@
         }
 
         body {
-            font-family: 'Rajdhani', sans-serif; /* Daha okunaklı metinler için */
+            font-family: 'Rajdhani', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-light);
             margin: 0;
-            padding: 0;
+            padding-top: 50px; /* Banner yüksekliği */
             line-height: 1.6;
-            overflow-x: hidden; /* Yatay kaydırmayı engelle */
+            overflow-x: hidden;
         }
 
-        /* Başlıklar için fütüristik font */
         h1, h2, h3 {
             font-family: 'Orbitron', sans-serif;
             color: var(--text-light);
@@ -40,14 +41,48 @@
             padding: 20px;
         }
 
+        /* Top Banner */
+        #topBanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 1em;
+        }
+
+        #topBanner .btn.small-btn {
+            padding: 8px 20px;
+            font-size: 0.9em;
+            border-radius: 30px;
+        }
+
+        #topBanner #closeBanner {
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+
+        #topBanner #closeBanner:hover {
+            color: var(--secondary-color);
+        }
+
         /* Header / Navbar */
         header {
-            background-color: rgba(26, 26, 46, 0.8); /* Saydamlık eklendi */
-            backdrop-filter: blur(10px); /* Bulanık arka plan */
+            background-color: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
             padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
             position: sticky;
-            top: 0;
+            top: 50px; /* banner yüksekliği */
             z-index: 1000;
         }
 
@@ -118,7 +153,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            overflow: hidden; /* Arka plan elemanları taşmasın */
+            overflow: hidden;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -128,12 +163,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://via.placeholder.com/1920x800/0d0d1a/e0e0f0?text=FUTURISTIC+NEURAL+NETWORK'); /* Placeholder, gerçek görsel ile değiştir */
+            background-image: url('https://via.placeholder.com/1920x800/0d0d1a/e0e0f0?text=FUTURISTIC+NEURAL+NETWORK');
             background-size: cover;
             background-position: center;
-            opacity: 0.3; /* Arka planı hafiflet */
+            opacity: 0.3;
             z-index: 1;
-            filter: blur(2px); /* Arka plana hafif bulanıklık */
+            filter: blur(2px);
         }
 
         .hero-content {
@@ -141,7 +176,7 @@
             z-index: 2;
             max-width: 800px;
             padding: 20px;
-            background-color: rgba(13, 13, 26, 0.6); /* Metin arkasına hafif koyu arka plan */
+            background-color: rgba(13, 13, 26, 0.6);
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(106, 13, 173, 0.3);
         }
@@ -267,7 +302,7 @@
             font-size: 1.1em;
             color: var(--text-dark);
             margin-bottom: 20px;
-            flex-grow: 1; /* İçeriğin kart içinde yayılmasını sağlar */
+            flex-grow: 1;
         }
 
         /* Footer */
@@ -291,30 +326,30 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive Tasarım */
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-            }
-            nav ul {
-                margin-top: 15px;
-            }
-            nav ul li {
-                margin: 0 15px;
-            }
-            .hero h1 {
-                font-size: 2.5em;
-            }
-            .hero p {
-                font-size: 1.2em;
-            }
-            .card-section {
-                grid-template-columns: 1fr;
-            }
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .card-section { grid-template-columns: repeat(2, 1fr); }
         }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; }
+            nav ul { margin-top: 15px; }
+            nav ul li { margin: 0 15px; }
+            .hero h1 { font-size: 2.5em; }
+            .hero p { font-size: 1.2em; }
+            .card-section { grid-template-columns: 1fr; }
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- Top Banner -->
+    <div id="topBanner">
+        BurakArı.com'a geçmek ister misin? 
+        <a href="https://burakari.com" class="btn small-btn">Geçiş Yap</a>
+        <span id="closeBanner">&times;</span>
+    </div>
 
     <header>
         <div class="container">
@@ -348,7 +383,7 @@
             <div class="card">
                 <div class="card-icon">🧠</div> <h3>KUANTUM SIÇRAMA</h3>
                 <p>Eşsiz potansiyelin kilidini açın, benzeri görülmemiş bilişsel yeteneği keşfedin.</p>
-                </div>
+            </div>
 
             <div class="card">
                 <div class="card-icon">💡</div> <h3>UYUMLU YAPAY ZEKA</h3>
@@ -372,6 +407,12 @@
             <p>&copy; 2026 Neo-Synth. Tüm Hakları Saklıdır.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById("closeBanner").onclick = () => {
+            document.getElementById("topBanner").style.display = "none";
+        }
+    </script>
 
 </body>
 </html>
