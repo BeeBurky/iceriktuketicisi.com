@@ -1,110 +1,256 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burak Arı | Content Curator</title>
+    <title>Burak Arı | Aerospace • Law • Data Science</title>
+    <meta name="description" content="Burak Arı: Mechanical Engineering, Law, and Data Science.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg: #050508;
-            --accent: #00f2ff;
-            --text: #e0e0f0;
-            --panel: rgba(255, 255, 255, 0.03);
+            --gold: #FFD700;
+            --dark-space: #0b0e14;
+            --deep-black: #050505;
+            --card-gray: #161b22;
+            --text-white: #f0f6fc;
+            --text-dim: #8b949e;
+            --transition-smooth: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-space);
+            color: var(--text-white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Arka planda sadece çok hafif, sabit bir grid kalsın, göz yormasın */
-        .grid-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
+        /* --- ÜST SİYAH-SARI VURGU ŞERİDİ --- */
+        .top-status-bar {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 45px;
+            background: var(--deep-black);
+            border-bottom: 2px solid var(--gold);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--gold);
         }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 80px 20px; }
+        .ticker { display: flex; gap: 20px; overflow: hidden; }
+        .ticker-item { opacity: 0.8; }
 
-        header { text-align: center; margin-bottom: 80px; }
-        header h1 { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 5px; color: var(--accent); }
-        header p { opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
+        /* --- ANA KONTEYNER --- */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 100px 20px 80px;
+        }
 
-        section { margin-bottom: 60px; }
-        h2 { font-family: 'Orbitron'; font-size: 1.2rem; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
-        h2::after { content: ""; flex: 1; height: 1px; background: rgba(0, 242, 255, 0.2); }
+        header { text-align: center; margin-bottom: 60px; }
 
-        /* İçerik Kartları - Daha Sade */
-        .content-card {
-            background: var(--panel);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            background: var(--card-gray);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.05);
+            margin-bottom: 30px;
+            transition: var(--transition-smooth);
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+        }
+
+        /* --- İÇERİK TÜKETİM LİSTESİ --- */
+        .feed-item {
+            border-left: 2px solid var(--gold);
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+        .feed-item h4 { font-size: 1.1rem; color: #fff; }
+        .feed-item p { font-size: 0.95rem; color: var(--text-dim); }
+        .feed-tag { font-size: 10px; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
+
+        /* --- EXPERTISE GRID --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .item {
+            background: rgba(255, 255, 255, 0.02);
             padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            border-radius: 12px;
             transition: 0.3s;
         }
-        .content-card:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.02); }
-        .tag { font-size: 10px; color: var(--accent); font-family: 'Orbitron'; display: block; margin-bottom: 5px; }
+        .item:hover { background: rgba(255, 215, 0, 0.05); }
+        .item i { font-size: 1.5rem; color: var(--gold); margin-bottom: 15px; display: block; }
 
-        /* Senin istediğin Contact Butonları */
-        .social-row { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        /* --- CONTACT BUTTONS --- */
+        .social-row { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; }
         .btn {
-            text-decoration: none; color: white; padding: 12px 25px; border-radius: 4px;
-            font-family: 'Orbitron'; font-size: 11px; display: inline-flex; align-items: center; gap: 10px;
-            transition: 0.3s; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none; color: #000; background: var(--gold);
+            padding: 12px 25px; border-radius: 4px; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 10px; font-size: 0.9rem;
+            transition: 0.3s; font-family: 'Orbitron', sans-serif;
         }
-        .btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
+        .btn-outline {
+            background: transparent; color: var(--gold); border: 1px solid var(--gold);
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
 
+        footer { text-align: center; padding: 40px; color: var(--text-dim); font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .top-status-bar span:nth-child(2) { display: none; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="grid-overlay"></div>
+    <div class="top-status-bar">
+        <span><i class="fas fa-circle" style="font-size: 8px; color: #00ff00;"></i> SYSTEM_ONLINE</span>
+        <div class="ticker">
+            <span class="ticker-item">BTC: <span id="btc-val">...</span></span>
+            <span class="ticker-item">ETH: <span id="eth-val">...</span></span>
+        </div>
+        <span id="sys-clock">00:00:00</span>
+    </div>
 
     <div class="container">
         <header>
-            <h1>BURAK ARI</h1>
-            <p>İçerik Tüketicisi & AI Meraklısı</p>
+            <h1>Burak Arı</h1>
+            <div class="tagline">Aerospace • Law • Data Science</div>
         </header>
 
-        <section id="about">
-            <h2><i class="fas fa-user-astronaut"></i> HAKKINDA</h2>
-            <p>Bilgiyi tüketmeyi, işlemeyi ve geleceğin teknolojileriyle harmanlamayı seviyorum. Bu alan, dijital dünyada radarıma takılanların bir arşividir.</p>
-        </section>
+        <main>
+            <section id="about">
+                <h2><i class="fas fa-user-astronaut"></i> Executive Summary</h2>
+                <p>
+                    I bridge the gap between <strong>Mechanical Engineering</strong> (MSc Aerospace) and <strong>Law</strong> (LLB). 
+                    By utilizing <strong>Data Science</strong> as my core analytical engine, I solve complex cross-disciplinary problems that require both technical precision and regulatory insight.
+                </p>
+            </section>
 
-        <section id="feed">
-            <h2><i class="fas fa-rss"></i> SON TÜKETİLENLER</h2>
-            
-            <div class="content-card">
-                <span class="tag">MAKALE / AI</span>
-                <h3>Yapay Zekanın Gelecek On Yılı</h3>
-                <p>Ajan tabanlı sistemlerin iş akışlarını nasıl değiştireceğine dair derin bir analiz.</p>
-            </div>
+            <section id="feed">
+                <h2><i class="fas fa-stream"></i> Content Feed</h2>
+                <div class="feed-item">
+                    <span class="feed-tag">Article / AI</span>
+                    <h4>The Era of Agentic Workflows</h4>
+                    <p>Deep dive into how autonomous AI agents are reshaping the engineering landscape.</p>
+                </div>
+                <div class="feed-item">
+                    <span class="feed-tag">Book / Sci-Fi</span>
+                    <h4>Project Hail Mary - Andy Weir</h4>
+                    <p>A masterclass in scientific problem-solving under extreme constraints.</p>
+                </div>
+            </section>
 
-            <div class="content-card">
-                <span class="tag">KİTAP / SCI-FI</span>
-                <h3>Neuromancer - William Gibson</h3>
-                <p>Sanal gerçeklik ve siber dünyanın köklerine bir yolculuk.</p>
-            </div>
-        </section>
+            <section id="expertise">
+                <h2><i class="fas fa-microchip"></i> Domain Expertise</h2>
+                <div class="grid">
+                    <article class="item">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Aerospace</h3>
+                        <p>Flight dynamics and control systems analysis.</p>
+                    </article>
+                    <article class="item">
+                        <i class="fas fa-gavel"></i>
+                        <h3>Legal Tech</h3>
+                        <p>Regulatory data analysis and compliance automation.</p>
+                    </article>
+                    <article class="item">
+                        <i class="fas fa-brain"></i>
+                        <h3>Data Science</h3>
+                        <p>Predictive modeling and complex dataset insights.</p>
+                    </article>
+                </div>
+            </section>
 
-        <section id="contact">
-            <h2><i class="fas fa-paper-plane"></i> İLETİŞİM</h2>
-            <p style="margin-bottom: 25px; opacity: 0.7;">Bir proje veya sadece sohbet için bana ulaşın.</p>
-            <nav class="social-row">
-                <a href="mailto:burak@burakari.com" class="btn"><i class="fas fa-envelope"></i> Email</a>
-                <a href="https://github.com/burakari" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://www.linkedin.com/in/burak-ari-85863a3ab/" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            </nav>
-        </section>
+            <section id="contact">
+                <h2><i class="fas fa-paper-plane"></i> Get In Touch</h2>
+                <p style="margin-bottom: 25px;">Ready to collaborate on the intersection of law and technology?</p>
+                <nav class="social-row">
+                    <a href="mailto:burak@burakari.com" class="btn">
+                        <i class="fas fa-envelope"></i> Email Me
+                    </a>
+                    <a href="https://github.com/burakari" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/burak-ari-85863a3ab/" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                </nav>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Burak Arı // Mechanical Engineer & Jurist</p>
+        </footer>
     </div>
 
+    <script>
+        // Basit Borsa Verisi
+        async function getPrices() {
+            try {
+                const res = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=["BTCUSDT","ETHUSDT"]');
+                const data = await res.json();
+                document.getElementById('btc-val').innerText = "$" + parseFloat(data[0].price).toFixed(0);
+                document.getElementById('eth-val').innerText = "$" + parseFloat(data[1].price).toFixed(0);
+            } catch (e) { console.log("Ticker offline"); }
+        }
+
+        // Saat
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('sys-clock').innerText = now.toLocaleTimeString('en-GB');
+        }
+
+        setInterval(getPrices, 30000);
+        setInterval(updateTime, 1000);
+        getPrices();
+        updateTime();
+    </script>
 </body>
 </html>
