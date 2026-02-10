@@ -3,174 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NS_OS | Financial Terminal</title>
+    <title>Burak Arı | Content Curator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #010103;
-            --neon-blue: #00f2ff;
-            --neon-purple: #bc13fe;
-            --up-color: #00ffaa;
-            --down-color: #ff4466;
+            --bg: #050508;
+            --accent: #00f2ff;
             --text: #e0e0f0;
+            --panel: rgba(255, 255, 255, 0.03);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: 'Fira Code', monospace; }
-
-        /* --- CANLI BORSA BANDI (TICKER) --- */
-        .market-bar {
-            background: rgba(0, 242, 255, 0.03);
-            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-            padding: 10px 0;
-            display: flex;
-            overflow: hidden;
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            backdrop-filter: blur(10px);
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        .ticker-wrapper {
-            display: flex;
-            gap: 50px;
-            padding-left: 20px;
+        /* Arka planda sadece çok hafif, sabit bir grid kalsın, göz yormasın */
+        .grid-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
         }
 
-        .crypto-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+        .container { max-width: 800px; margin: 0 auto; padding: 80px 20px; }
 
-        .label { color: #777; font-family: 'Orbitron'; font-size: 10px; }
-        .price { color: var(--text); transition: all 0.5s ease; }
-        
-        /* Fiyat Hareket Efektleri */
-        .flash-up { color: var(--up-color) !important; text-shadow: 0 0 10px var(--up-color); }
-        .flash-down { color: var(--down-color) !important; text-shadow: 0 0 10px var(--down-color); }
+        header { text-align: center; margin-bottom: 80px; }
+        header h1 { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 5px; color: var(--accent); }
+        header p { opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
 
-        /* --- SİSTEM DURUM PANELİ --- */
-        .status-container {
-            max-width: 1100px;
-            margin: 40px auto;
+        section { margin-bottom: 60px; }
+        h2 { font-family: 'Orbitron'; font-size: 1.2rem; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+        h2::after { content: ""; flex: 1; height: 1px; background: rgba(0, 242, 255, 0.2); }
+
+        /* İçerik Kartları - Daha Sade */
+        .content-card {
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 20px;
-            border: 1px solid rgba(188, 19, 254, 0.2);
-            background: rgba(15, 15, 25, 0.8);
-            border-radius: 4px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: 0.3s;
         }
+        .content-card:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.02); }
+        .tag { font-size: 10px; color: var(--accent); font-family: 'Orbitron'; display: block; margin-bottom: 5px; }
 
-        .system-header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-family: 'Orbitron';
-            font-size: 12px;
-            color: var(--neon-purple);
+        /* Senin istediğin Contact Butonları */
+        .social-row { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .btn {
+            text-decoration: none; color: white; padding: 12px 25px; border-radius: 4px;
+            font-family: 'Orbitron'; font-size: 11px; display: inline-flex; align-items: center; gap: 10px;
+            transition: 0.3s; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
 
     </style>
 </head>
 <body>
 
-    <div class="market-bar">
-        <div class="ticker-wrapper">
-            <div class="crypto-item">
-                <span class="label">BTC/USDT</span>
-                <span id="btc-price" class="price">--.--</span>
-                <span id="btc-icon"></span>
+    <div class="grid-overlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>BURAK ARI</h1>
+            <p>İçerik Tüketicisi & AI Meraklısı</p>
+        </header>
+
+        <section id="about">
+            <h2><i class="fas fa-user-astronaut"></i> HAKKINDA</h2>
+            <p>Bilgiyi tüketmeyi, işlemeyi ve geleceğin teknolojileriyle harmanlamayı seviyorum. Bu alan, dijital dünyada radarıma takılanların bir arşividir.</p>
+        </section>
+
+        <section id="feed">
+            <h2><i class="fas fa-rss"></i> SON TÜKETİLENLER</h2>
+            
+            <div class="content-card">
+                <span class="tag">MAKALE / AI</span>
+                <h3>Yapay Zekanın Gelecek On Yılı</h3>
+                <p>Ajan tabanlı sistemlerin iş akışlarını nasıl değiştireceğine dair derin bir analiz.</p>
             </div>
-            <div class="crypto-item">
-                <span class="label">ETH/USDT</span>
-                <span id="eth-price" class="price">--.--</span>
-                <span id="eth-icon"></span>
+
+            <div class="content-card">
+                <span class="tag">KİTAP / SCI-FI</span>
+                <h3>Neuromancer - William Gibson</h3>
+                <p>Sanal gerçeklik ve siber dünyanın köklerine bir yolculuk.</p>
             </div>
-            <div class="crypto-item">
-                <span class="label">SOL/USDT</span>
-                <span id="sol-price" class="price">--.--</span>
-                <span id="sol-icon"></span>
-            </div>
-            <div class="crypto-item">
-                <span class="label">BNB/USDT</span>
-                <span id="bnb-price" class="price">--.--</span>
-                <span id="bnb-icon"></span>
-            </div>
-        </div>
+        </section>
+
+        <section id="contact">
+            <h2><i class="fas fa-paper-plane"></i> İLETİŞİM</h2>
+            <p style="margin-bottom: 25px; opacity: 0.7;">Bir proje veya sadece sohbet için bana ulaşın.</p>
+            <nav class="social-row">
+                <a href="mailto:burak@burakari.com" class="btn"><i class="fas fa-envelope"></i> Email</a>
+                <a href="https://github.com/burakari" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/burak-ari-85863a3ab/" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </nav>
+        </section>
     </div>
 
-    <div class="status-container">
-        <div class="system-header">
-            <span>> NEURAL_LINK: ACTIVE</span>
-            <span>DATA_FEED: BINANCE_REALTIME</span>
-            <span id="clock">00:00:00</span>
-        </div>
-        <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); letter-spacing: 5px;">FINANCIAL_CORE v4.0</h2>
-        <p style="margin-top: 10px; font-size: 13px; color: #888;">Piyasa verileri 10 saniyelik periyotlarla senkronize ediliyor...</p>
-    </div>
-
-    <script>
-        // Fiyatları takip etmek için eski değerleri tutan obje
-        let lastPrices = { BTC: 0, ETH: 0, SOL: 0, BNB: 0 };
-
-        async function fetchMarketData() {
-            try {
-                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=["BTCUSDT","ETHUSDT","SOLUSDT","BNBUSDT"]');
-                const data = await response.json();
-                
-                updatePrice('BTC', data[0].price, 'btc-price', 'btc-icon');
-                updatePrice('ETH', data[1].price, 'eth-price', 'eth-icon');
-                updatePrice('SOL', data[2].price, 'sol-price', 'sol-icon');
-                updatePrice('BNB', data[3].price, 'bnb-price', 'bnb-icon');
-
-            } catch (err) {
-                console.error("Veri akış hatası:", err);
-            }
-        }
-
-        function updatePrice(symbol, newPrice, elementId, iconId) {
-            const price = parseFloat(newPrice).toFixed(2);
-            const el = document.getElementById(elementId);
-            const iconEl = document.getElementById(iconId);
-            const lastPrice = lastPrices[symbol];
-
-            el.innerText = `$${price}`;
-
-            // Fiyat değişim animasyonu
-            if (lastPrice !== 0) {
-                if (price > lastPrice) {
-                    el.className = 'price flash-up';
-                    iconEl.innerHTML = '<i class="fas fa-caret-up" style="color:var(--up-color)"></i>';
-                } else if (price < lastPrice) {
-                    el.className = 'price flash-down';
-                    iconEl.innerHTML = '<i class="fas fa-caret-down" style="color:var(--down-color)"></i>';
-                }
-            }
-
-            // 2 saniye sonra rengi normale döndür
-            setTimeout(() => {
-                el.className = 'price';
-            }, 2000);
-
-            lastPrices[symbol] = price;
-        }
-
-        // Saat Fonksiyonu
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString();
-        }
-
-        // Başlatıcılar
-        setInterval(fetchMarketData, 10000); // 10 saniyede bir borsa
-        setInterval(updateClock, 1000);      // Her saniye saat
-        fetchMarketData(); // İlk açılış
-    </script>
 </body>
 </html>
