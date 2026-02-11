@@ -3,189 +3,1543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neo-Synth | Ultimate OS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@300;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Neo-Synth | AI & Data Science Hub</title>
+    <meta name="description" content="Yapay Zeka, Data Science ve Bilişim Sektörünün Geleceği - Kapsamlı Rehber">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg: #010103;
-            --panel: rgba(10, 10, 18, 0.95);
-            --neon-blue: #00f2ff;
+            --bg: #050508;
+            --bg-secondary: #0a0a10;
+            --panel: rgba(15, 15, 25, 0.95);
+            --neon-cyan: #00f2ff;
+            --neon-blue: #0080ff;
             --neon-purple: #bc13fe;
-            --text: #e0e0f0;
-            --glass: rgba(255, 255, 255, 0.05);
-            --accent: var(--neon-blue);
+            --neon-pink: #ff006e;
+            --neon-green: #00ff88;
+            --neon-orange: #ff9500;
+            --text: #e8e8f0;
+            --text-dim: #8892a0;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
-        /* Hayalet Modu Ayarları */
-        body.ghost-mode {
-            --neon-blue: #555;
-            --neon-purple: #333;
-            --accent: #777;
-            filter: grayscale(0.5);
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            scroll-behavior: smooth;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-
-        /* --- NAVIGATION --- */
-        nav.top-nav {
-            padding: 15px; text-align: center; position: sticky; top: 0; 
-            background: rgba(1, 1, 3, 0.9); backdrop-filter: blur(15px); z-index: 1000;
-            border-bottom: 1px solid var(--glass);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .nav-links a { color: white; text-decoration: none; margin: 0 15px; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 1px; }
-        
-        /* Mod Değiştirici Buton */
-        #mode-toggle {
-            background: var(--glass); border: 1px solid var(--accent); color: var(--accent);
-            padding: 5px 15px; border-radius: 20px; cursor: pointer; font-family: 'Orbitron'; font-size: 10px;
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
         }
 
-        /* --- TERMINAL EFFECT --- */
-        .hero-terminal {
-            margin-top: 60px;
-            padding: 40px;
-            background: rgba(0,0,0,0.5);
-            border-left: 4px solid var(--neon-blue);
-            font-family: 'Fira Code', monospace;
-            margin-bottom: 80px;
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
         }
-        .typing-text::after { content: "|"; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
 
-        /* --- READING LIST (NEW) --- */
-        .reading-section { margin-bottom: 100px; }
-        .list-item {
-            background: var(--panel);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid var(--glass);
-            display: flex; justify-content: space-between; align-items: center;
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
         }
-        .progress-container { width: 150px; height: 8px; background: #222; border-radius: 4px; overflow: hidden; }
-        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue)); }
 
-        /* --- CONTACT (PREVIOUSLY OPTIMIZED) --- */
-        #contact {
-            text-align: center; background: var(--panel); padding: 60px 40px;
-            border-radius: 20px; border: 1px solid var(--accent);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite;
+            box-shadow: 0 0 10px var(--neon-cyan);
         }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 2s; background: var(--neon-purple); }
+        .particle:nth-child(3) { left: 50%; animation-delay: 4s; background: var(--neon-pink); }
+        .particle:nth-child(4) { left: 70%; animation-delay: 6s; background: var(--neon-green); }
+        .particle:nth-child(5) { left: 90%; animation-delay: 8s; background: var(--neon-orange); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 30px;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 30px;
+            background: rgba(5, 5, 8, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: var(--glass);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 255, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(0, 242, 255, 0.6); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .btn {
-            display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px;
-            font-family: 'Orbitron'; font-size: 13px; text-decoration: none; color: white;
-            background: var(--neon-purple); border-radius: 50px; transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
         }
-        .btn-outline { background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 0 20px var(--accent); }
 
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+            color: var(--bg);
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--neon-purple);
+            color: var(--neon-purple);
+        }
+
+        .btn-outline:hover {
+            background: var(--neon-purple);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(188, 19, 254, 0.4);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--glass);
+            border: 1px solid var(--neon-purple);
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--neon-purple);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        /* AI Comparison Section */
+        .ai-comparison {
+            background: linear-gradient(180deg, transparent, rgba(0, 242, 255, 0.02), transparent);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .ai-card {
+            background: var(--panel);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 20px 50px rgba(0, 242, 255, 0.15);
+        }
+
+        .ai-card:hover::before {
+            opacity: 1;
+        }
+
+        .ai-card.gpt::before { background: linear-gradient(90deg, #10a37f, #19c59f); }
+        .ai-card.gpt:hover { border-color: #10a37f; box-shadow: 0 20px 50px rgba(16, 163, 127, 0.2); }
+        
+        .ai-card.claude::before { background: linear-gradient(90deg, #cc785c, #d4a574); }
+        .ai-card.claude:hover { border-color: #cc785c; box-shadow: 0 20px 50px rgba(204, 120, 92, 0.2); }
+        
+        .ai-card.gemini::before { background: linear-gradient(90deg, #4285f4, #34a853); }
+        .ai-card.gemini:hover { border-color: #4285f4; box-shadow: 0 20px 50px rgba(66, 133, 244, 0.2); }
+        
+        .ai-card.copilot::before { background: linear-gradient(90deg, #0078d4, #00bcf2); }
+        .ai-card.copilot:hover { border-color: #0078d4; box-shadow: 0 20px 50px rgba(0, 120, 212, 0.2); }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .ai-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .gpt .ai-icon { background: rgba(16, 163, 127, 0.2); color: #10a37f; }
+        .claude .ai-icon { background: rgba(204, 120, 92, 0.2); color: #cc785c; }
+        .gemini .ai-icon { background: linear-gradient(135deg, rgba(66, 133, 244, 0.2), rgba(52, 168, 83, 0.2)); color: #4285f4; }
+        .copilot .ai-icon { background: rgba(0, 120, 212, 0.2); color: #0078d4; }
+
+        .ai-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .ai-company {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .ai-desc {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .ai-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .spec-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .spec-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+        }
+
+        .rating-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--glass);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .rating-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .gpt .rating-fill { background: linear-gradient(90deg, #10a37f, #19c59f); }
+        .claude .rating-fill { background: linear-gradient(90deg, #cc785c, #d4a574); }
+        .gemini .rating-fill { background: linear-gradient(90deg, #4285f4, #34a853); }
+        .copilot .rating-fill { background: linear-gradient(90deg, #0078d4, #00bcf2); }
+
+        /* AI History Timeline */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--panel);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 400px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            border-color: var(--neon-cyan);
+            transform: scale(1.02);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--bg);
+            border: 3px solid var(--neon-cyan);
+            border-radius: 50%;
+            top: 30px;
+            right: -60px;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            right: auto;
+            left: -60px;
+        }
+
+        .timeline-year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Data Science Section */
+        .data-science {
+            background: linear-gradient(180deg, transparent, rgba(188, 19, 254, 0.03), transparent);
+        }
+
+        .ds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .ds-card {
+            background: var(--panel);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ds-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-purple), transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ds-card:hover::after {
+            opacity: 0.1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .ds-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-purple);
+        }
+
+        .ds-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, rgba(188, 19, 254, 0.2), rgba(0, 242, 255, 0.2));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .ds-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .ds-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Future of IT Section */
+        .future-it {
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.02), transparent);
+        }
+
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .future-card {
+            background: var(--panel);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s ease;
+        }
+
+        .future-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.1);
+        }
+
+        .future-header {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 242, 255, 0.05));
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .future-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .future-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .future-body {
+            padding: 25px;
+        }
+
+        .future-body p {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .trend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .trend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .trend-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+
+        /* Terminal Section */
+        .terminal-section {
+            padding: 80px 20px;
+        }
+
+        .terminal {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(10, 10, 15, 0.98);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-btn.red { background: #ff5f56; }
+        .terminal-btn.yellow { background: #ffbd2e; }
+        .terminal-btn.green { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .terminal-body {
+            padding: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .terminal-line {
+            margin-bottom: 10px;
+        }
+
+        .terminal-prompt {
+            color: var(--neon-green);
+        }
+
+        .terminal-command {
+            color: var(--text);
+        }
+
+        .terminal-output {
+            color: var(--text-dim);
+            margin-left: 20px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: var(--neon-cyan);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .copyright {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+
+            .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 10px;
+                right: auto;
+            }
+
+            .hero-stats {
+                gap: 30px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
-
-    <div id="particles-js"></div>
-
-    <nav class="top-nav">
-        <div class="logo" style="font-family: 'Orbitron'; font-weight: 900; color: var(--neon-blue);">NS_OS</div>
-        <div class="nav-links">
-            <a href="#reading">READING</a>
-            <a href="#contact">CONNECT</a>
-        </div>
-        <button id="mode-toggle">GHOST_MODE: OFF</button>
-    </nav>
-
-    <div class="container">
-        
-        <section class="hero-terminal">
-            <div style="color: var(--neon-purple); margin-bottom: 10px;">> SİSTEM BAŞLATILIYOR...</div>
-            <div style="color: var(--neon-blue); margin-bottom: 10px;">> KULLANICI: BURAK_ARI</div>
-            <div class="typing-text" id="typewriter">> Geleceği tüketmek için hazır olun...</div>
-        </section>
-
-        <section id="reading" class="reading-section">
-            <h2 style="font-family: 'Orbitron'; margin-bottom: 30px;"><i class="fas fa-tasks"></i> AKTİF TÜKETİM AKIŞI</h2>
-            
-            <div class="list-item">
-                <div>
-                    <h4 style="font-family: 'Orbitron';">The Three-Body Problem</h4>
-                    <span style="font-size: 12px; color: #777;">Kitap / Bilim Kurgu</span>
-                </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 12px; margin-bottom: 5px;">%65 Tamamlandı</div>
-                    <div class="progress-container"><div class="progress-bar" style="width: 65%;"></div></div>
-                </div>
-            </div>
-
-            <div class="list-item">
-                <div>
-                    <h4 style="font-family: 'Orbitron';">Deep Learning Specialization</h4>
-                    <span style="font-size: 12px; color: #777;">Kurs / AI</span>
-                </div>
-                <div style="text-align: right;">
-                    <div style="font-size: 12px; margin-bottom: 5px;">%40 Tamamlandı</div>
-                    <div class="progress-container"><div class="progress-bar" style="width: 40%;"></div></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2 style="font-family: 'Orbitron';"><i class="fas fa-paper-plane"></i> Get In Touch</h2>
-            <p style="margin: 20px 0 30px; color: #94a3b8;">Ready to collaborate or have a question? Reach out through any of the channels below.</p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="mailto:burak@burakari.com" class="btn"><i class="fas fa-envelope"></i> Email Me</a>
-                <a href="https://github.com/burakari" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://www.linkedin.com/in/burak-ari-85863a3ab/" target="_blank" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            </div>
-        </section>
-
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">NEO-SYNTH</div>
+            <div class="nav-links">
+                <a href="#ai-karsilastirma">AI Karşılaştırma</a>
+                <a href="#ai-tarihi">AI Tarihi</a>
+                <a href="#data-science">Data Science</a>
+                <a href="#gelecek">Gelecek</a>
+                <a href="#terminal">Terminal</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span>⚡</span>
+            <span>v2.0.26 SYSTEM ONLINE</span>
+        </div>
+        <h1>
+            <span class="gradient-text">YAPAY ZEKA</span><br>
+            & DATA SCIENCE
+        </h1>
+        <p class="hero-subtitle">
+            Yapay zeka modellerini keşfedin, data science dünyasına dalın ve bilişim sektörünün geleceğini şekillendiren teknolojileri öğrenin.
+        </p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">AI Modeli</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">70+</div>
+                <div class="stat-label">Yıllık Geçmiş</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Olasılık</div>
+            </div>
+        </div>
+        <div class="hero-buttons">
+            <a href="#ai-karsilastirma" class="btn btn-primary">Keşfet →</a>
+            <a href="#terminal" class="btn btn-outline">Terminal</a>
+        </div>
+    </section>
+
+    <!-- AI Comparison Section -->
+    <section id="ai-karsilastirma" class="ai-comparison">
+        <div class="section-header fade-in">
+            <div class="section-badge">
+                <span>🤖</span>
+                <span>AI MODEL KARŞILAŞTIRMASI</span>
+            </div>
+            <h2 class="section-title">Yapay Zeka <span style="color: var(--neon-cyan);">Devlerinin</span> Karşılaştırması</h2>
+            <p class="section-desc">
+                Günümüzün en güçlü yapay zeka modellerini detaylı bir şekilde inceleyin ve hangisinin sizin için en uygun olduğunu keşfedin.
+            </p>
+        </div>
+
+        <div class="comparison-grid">
+            <!-- GPT-4 -->
+            <div class="ai-card gpt fade-in">
+                <div class="ai-header">
+                    <div class="ai-icon">G</div>
+                    <div>
+                        <div class="ai-name">GPT-4o</div>
+                        <div class="ai-company">OpenAI</div>
+                    </div>
+                </div>
+                <p class="ai-desc">
+                    OpenAI'nin amiral gemisi modeli. Metin, görüntü ve ses işlemede mükemmel performans. 128K token bağlam penceresi.
+                </p>
+                <div class="ai-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">Genel Performans</span>
+                        <span class="spec-value">9.5/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 95%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Kod Yazma</span>
+                        <span class="spec-value">9.2/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 92%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Yaratıcılık</span>
+                        <span class="spec-value">9.0/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 90%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Mantıksal Akıl Yürütme</span>
+                        <span class="spec-value">9.3/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 93%;"></div></div>
+                </div>
+            </div>
+
+            <!-- Claude -->
+            <div class="ai-card claude fade-in">
+                <div class="ai-header">
+                    <div class="ai-icon">C</div>
+                    <div>
+                        <div class="ai-name">Claude 3.5 Sonnet</div>
+                        <div class="ai-company">Anthropic</div>
+                    </div>
+                </div>
+                <p class="ai-desc">
+                    Anthropic'in en gelişmiş modeli. 200K token bağlam penceresi ile uzun dokümanları analiz etmede üstün. Güvenlik odaklı tasarım.
+                </p>
+                <div class="ai-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">Genel Performans</span>
+                        <span class="spec-value">9.3/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 93%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Kod Yazma</span>
+                        <span class="spec-value">9.4/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 94%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Yaratıcılık</span>
+                        <span class="spec-value">8.8/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 88%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Mantıksal Akıl Yürütme</span>
+                        <span class="spec-value">9.1/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 91%;"></div></div>
+                </div>
+            </div>
+
+            <!-- Gemini -->
+            <div class="ai-card gemini fade-in">
+                <div class="ai-header">
+                    <div class="ai-icon">G</div>
+                    <div>
+                        <div class="ai-name">Gemini 2.0 Pro</div>
+                        <div class="ai-company">Google</div>
+                    </div>
+                </div>
+                <p class="ai-desc">
+                    Google'ın çok modlu yapay zeka modeli. 2M token bağlam penceresi ile devasa veri setlerini işleyebilir. YouTube ve Google entegrasyonu.
+                </p>
+                <div class="ai-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">Genel Performans</span>
+                        <span class="spec-value">9.0/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 90%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Kod Yazma</span>
+                        <span class="spec-value">8.7/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 87%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Yaratıcılık</span>
+                        <span class="spec-value">8.9/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 89%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Mantıksal Akıl Yürütme</span>
+                        <span class="spec-value">8.8/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 88%;"></div></div>
+                </div>
+            </div>
+
+            <!-- Copilot -->
+            <div class="ai-card copilot fade-in">
+                <div class="ai-header">
+                    <div class="ai-icon">C</div>
+                    <div>
+                        <div class="ai-name">GitHub Copilot</div>
+                        <div class="ai-company">Microsoft / OpenAI</div>
+                    </div>
+                </div>
+                <p class="ai-desc">
+                    Geliştiriciler için optimize edilmiş AI asistanı. Visual Studio Code entegrasyonu ile kod tamamlama ve önerilerde uzman.
+                </p>
+                <div class="ai-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">Genel Performans</span>
+                        <span class="spec-value">8.5/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 85%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Kod Yazma</span>
+                        <span class="spec-value">9.5/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 95%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Yaratıcılık</span>
+                        <span class="spec-value">7.5/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 75%;"></div></div>
+                    <div class="spec-row">
+                        <span class="spec-label">Mantıksal Akıl Yürütme</span>
+                        <span class="spec-value">8.0/10</span>
+                    </div>
+                    <div class="rating-bar"><div class="rating-fill" style="width: 80%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI History Timeline -->
+    <section id="ai-tarihi">
+        <div class="section-header fade-in">
+            <div class="section-badge">
+                <span>📜</span>
+                <span>YAPAY ZEKA TARİHİ</span>
+            </div>
+            <h2 class="section-title">Yapay Zekanın <span style="color: var(--neon-purple);">Evrimi</span></h2>
+            <p class="section-desc">
+                1950'lerden günümüze yapay zekanın dönüştürücü yolculuğu.
+            </p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">1950</div>
+                    <div class="timeline-title">Turing Testi</div>
+                    <div class="timeline-desc">
+                        Alan Turing, "Makineler Düşünebilir mi?" makalesinde Turing Testi'ni tanıttı. Yapay zeka alanının temelini attı.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">1956</div>
+                    <div class="timeline-title">Dartmouth Konferansı</div>
+                    <div class="timeline-desc">
+                        John McCarthy, Marvin Minsky ve diğerleri "Yapay Zeka" terimini resmi olarak tanıttı. AI'nın doğuşu.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">1986</div>
+                    <div class="timeline-title">Backpropagation</div>
+                    <div class="timeline-desc">
+                        Geoffrey Hinton ve ekibi, yapay sinir ağlarını eğitmek için geri yayılım algoritmasını popülerleştirdi.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">1997</div>
+                    <div class="timeline-title">Deep Blue Zaferi</div>
+                    <div class="timeline-desc">
+                        IBM'in Deep Blue'su, dünya satranç şampiyonu Garry Kasparov'u yendi. Bir dönüm noktası.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">2012</div>
+                    <div class="timeline-title">AlexNet Devrimi</div>
+                    <div class="timeline-desc">
+                        Alex Krizhevsky'nin derin öğrenme modeli ImageNet yarışmasını ezici bir üstünlükle kazandı. Derin öğrenme çağı başladı.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">2017</div>
+                    <div class="timeline-title">Transformer Mimarisi</div>
+                    <div class="timeline-desc">
+                        Google'ın "Attention Is All You Need" makalesi, Transformer mimarisini tanıttı. Modern LLM'lerin temeli.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-title">ChatGPT Patlaması</div>
+                    <div class="timeline-desc">
+                        OpenAI'nin ChatGPT'si 2 ayda 100 milyon kullanıcıya ulaştı. Tüketici odaklı AI çağı başladı.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <div class="timeline-year">2024-2025</div>
+                    <div class="timeline-title">Çok Modlu AI Çağı</div>
+                    <div class="timeline-desc">
+                        GPT-4o, Claude 3.5, Gemini 2.0 gibi modeller metin, görüntü, ses ve video işlemede uzmanlaşıyor.
+                    </div>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Science Section -->
+    <section id="data-science" class="data-science">
+        <div class="section-header fade-in">
+            <div class="section-badge">
+                <span>📊</span>
+                <span>DATA SCIENCE</span>
+            </div>
+            <h2 class="section-title">Veri Biliminin <span style="color: var(--neon-purple);">Gücü</span></h2>
+            <p class="section-desc">
+                Data Science, ham verileri anlamlı içgörülere dönüştüren disiplinler arası bir alandır.
+            </p>
+        </div>
+
+        <div class="ds-grid">
+            <div class="ds-card fade-in">
+                <div class="ds-icon">🧮</div>
+                <h3>Matematik & İstatistik</h3>
+                <p>Veri biliminin temelini oluşturan matematiksel modeller, olasılık teorisi ve istatistiksel analiz yöntemleri.</p>
+            </div>
+
+            <div class="ds-card fade-in">
+                <div class="ds-icon">💻</div>
+                <h3>Programlama</h3>
+                <p>Python, R ve SQL ile veri manipülasyonu, analizi ve görselleştirme. Pandas, NumPy, Scikit-learn kütüphaneleri.</p>
+            </div>
+
+            <div class="ds-card fade-in">
+                <div class="ds-icon">🤖</div>
+                <h3>Makine Öğrenmesi</h3>
+                <p>Denetimli ve denetimsiz öğrenme algoritmaları, derin öğrenme, sinir ağları ve model optimizasyonu.</p>
+            </div>
+
+            <div class="ds-card fade-in">
+                <div class="ds-icon">📈</div>
+                <h3>Veri Görselleştirme</h3>
+                <p>Matplotlib, Seaborn, Tableau ile karmaşık verilerin anlaşılır grafikler ve dashboard'lar haline dönüştürülmesi.</p>
+            </div>
+
+            <div class="ds-card fade-in">
+                <div class="ds-icon">🗄️</div>
+                <h3>Big Data</h3>
+                <p>Hadoop, Spark, NoSQL veritabanları ile petabyte ölçeğinde verilerin işlenmesi ve analizi.</p>
+            </div>
+
+            <div class="ds-card fade-in">
+                <div class="ds-icon">🔍</div>
+                <h3>Veri Madenciliği</h3>
+                <p>Büyük veri setlerinden kalıpların, trendlerin ve gizli ilişkilerin keşfedilmesi süreci.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future of IT Section -->
+    <section id="gelecek" class="future-it">
+        <div class="section-header fade-in">
+            <div class="section-badge">
+                <span>🚀</span>
+                <span>GELECEK</span>
+            </div>
+            <h2 class="section-title">Bilişim Sektörünün <span style="color: var(--neon-green);">Geleceği</span></h2>
+            <p class="section-desc">
+                2025 ve ötesinde bilişim sektörünü şekillendirecek trendler ve teknolojiler.
+            </p>
+        </div>
+
+        <div class="future-grid">
+            <div class="future-card fade-in">
+                <div class="future-header">
+                    <div class="future-icon">🧠</div>
+                    <h3>Yapay Genel Zeka (AGI)</h3>
+                </div>
+                <div class="future-body">
+                    <p>İnsan seviyesinde bilişsel yeteneklere sahip yapay zeka sistemleri. 2030'larda gerçekleşmesi bekleniyor.</p>
+                    <div class="trend-list">
+                        <div class="trend-item"><div class="trend-dot"></div>Otonom öğrenme</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Çoklu görev performansı</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Bilinç simülasyonu</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-card fade-in">
+                <div class="future-header">
+                    <div class="future-icon">⚛️</div>
+                    <h3>Kuantum Bilgisayarlar</h3>
+                </div>
+                <div class="future-body">
+                    <p>Klasik bilgisayarların çözemeyeceği problemleri saniyeler içinde çözen kuantum işlemciler.</p>
+                    <div class="trend-list">
+                        <div class="trend-item"><div class="trend-dot"></div>IBM 1000+ qubit hedefi</div>
+                        <div class="trend-item"><div class="trend-dot"></div>İlaç keşfi optimizasyonu</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Kriptografi devrimi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-card fade-in">
+                <div class="future-header">
+                    <div class="future-icon">🌐</div>
+                    <h3>Uzay İnterneti</h3>
+                </div>
+                <div class="future-body">
+                    <p>Starlink ve benzeri projelerle dünyanın her köşesine yüksek hızlı internet erişimi.</p>
+                    <div class="trend-list">
+                        <div class="trend-item"><div class="trend-dot"></div>42.000+ uydu hedefi</div>
+                        <div class="trend-item"><div class="trend-dot"></div>1 Gbps+ hızlar</div>
+                        <div class="trend-item"><div class="trend-dot"></div>5G entegrasyonu</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-card fade-in">
+                <div class="future-header">
+                    <div class="future-icon">🔐</div>
+                    <h3>Sıfır Güven Mimarisi</h3>
+                </div>
+                <div class="future-body">
+                    <p>Hiçbir kullanıcı veya cihaza varsayılan olarak güvenmeyen yeni nesil güvenlik yaklaşımı.</p>
+                    <div class="trend-list">
+                        <div class="trend-item"><div class="trend-dot"></div>Sürekli doğrulama</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Mikro segmentasyon</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Least privilege erişimi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-card fade-in">
+                <div class="future-header">
+                    <div class="future-icon">🤖</div>
+                    <h3>Otonom Sistemler</h3>
+                </div>
+                <div class="future-body">
+                    <p>İnsan müdahalesi olmadan karar alabilen ve kendini optimize edebilen sistemler.</p>
+                    <div class="trend-list">
+                        <div class="trend-item"><div class="trend-dot"></div>Tam otonom araçlar</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Akıllı şehirler</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Otonom tedarik zinciri</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-card fade-in">
+                <div class="future-header">
+                    <div class="future-icon">☁️</div>
+                    <h3>Kenar Bulutu (Edge Cloud)</h3>
+                </div>
+                <div class="future-body">
+                    <p>Veri işleme gücünün merkezi buluttan uç cihazlara kayması. Düşük gecikme, yüksek verimlilik.</p>
+                    <div class="trend-list">
+                        <div class="trend-item"><div class="trend-dot"></div>5G/6G entegrasyonu</div>
+                        <div class="trend-item"><div class="trend-dot"></div>IoT cihaz optimizasyonu</div>
+                        <div class="trend-item"><div class="trend-dot"></div>Real-time analitik</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terminal Section -->
+    <section id="terminal" class="terminal-section">
+        <div class="section-header fade-in">
+            <div class="section-badge">
+                <span>💻</span>
+                <span>TERMINAL</span>
+            </div>
+            <h2 class="section-title">Sistem <span style="color: var(--neon-green);">Durumu</span></h2>
+        </div>
+
+        <div class="terminal fade-in">
+            <div class="terminal-header">
+                <div class="terminal-btn red"></div>
+                <div class="terminal-btn yellow"></div>
+                <div class="terminal-btn green"></div>
+                <span class="terminal-title">neo-synth@system:~</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command"> ./init_ai_research.sh</span>
+                </div>
+                <div class="terminal-line terminal-output">
+                    [OK] Sistem başlatılıyor...<br>
+                    [OK] AI modelleri yükleniyor...<br>
+                    [OK] Data Science modülleri aktif...<br>
+                    [OK] Gelecek trendleri analiz ediliyor...
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command"> cat ai_models.json | grep "performance"</span>
+                </div>
+                <div class="terminal-line terminal-output">
+                    {<br>
+                    &nbsp;&nbsp;"GPT-4o": "state-of-the-art",<br>
+                    &nbsp;&nbsp;"Claude-3.5": "exceptional",<br>
+                    &nbsp;&nbsp;"Gemini-2.0": "multimodal-leader",<br>
+                    &nbsp;&nbsp;"Copilot": "developer-favorite"<br>
+                    }
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command"> python3 predict_future.py --year=2030</span>
+                </div>
+                <div class="terminal-line terminal-output">
+                    📊 TAHMİN SONUÇLARI:<br>
+                    → AGI olasılığı: %73<br>
+                    → Kuantum üstünlüğü: Aktif<br>
+                    → Uzay interneti: Global kapsama<br>
+                    → Otonom sistemler: Yaygın kullanım
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">NEO-SYNTH</div>
+            <p class="footer-text">
+                Yapay zeka, data science ve bilişim teknolojilerinin kesişim noktasında bilgi ve ilham kaynağı.
+            </p>
+            <div class="footer-links">
+                <a href="#ai-karsilastirma">AI Karşılaştırma</a>
+                <a href="#ai-tarihi">AI Tarihi</a>
+                <a href="#data-science">Data Science</a>
+                <a href="#gelecek">Gelecek</a>
+            </div>
+            <p class="copyright">
+                © 2026 Neo-Synth | Tüm hakları saklıdır.<br>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--neon-cyan);">
+                    &lt;/&gt; with 💜 by Burak Arı
+                </span>
+            </p>
+        </div>
+    </footer>
+
     <script>
-        // Terminal Yazı Efekti
-        const textElement = document.getElementById('typewriter');
-        const text = "> Veri akışı optimize ediliyor... İçerik kürasyonu aktif.";
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                textElement.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 50);
-            }
-        }
-        textElement.innerHTML = ""; // Temizle
-        type();
-
-        // Ghost Mode Toggle
-        const btn = document.getElementById('mode-toggle');
-        btn.onclick = () => {
-            document.body.classList.toggle('ghost-mode');
-            const isGhost = document.body.classList.contains('ghost-mode');
-            btn.innerText = isGhost ? "GHOST_MODE: ON" : "GHOST_MODE: OFF";
-        };
-
-        // Particles
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 60 },
-                "color": { "value": "#00f2ff" },
-                "line_linked": { "enable": true, "distance": 150, "color": "#bc13fe", "opacity": 0.3 },
-                "move": { "enable": true, "speed": 1 }
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
         });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '-50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate skill bars on scroll
+        const ratingBars = document.querySelectorAll('.rating-fill');
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.style.width;
+                    entry.target.style.width = '0%';
+                    setTimeout(() => {
+                        entry.target.style.width = width;
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        ratingBars.forEach(bar => barObserver.observe(bar));
     </script>
 </body>
 </html>
